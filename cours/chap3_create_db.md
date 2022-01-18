@@ -167,7 +167,7 @@ mysql>describe compagnies;
 +--------+-------------+------+-----+---------+-------+
 ```
 
-## Exercice modifier
+## 01 Exercice modifier
 
 Modifiez la table compagny ci-dessus et ajoutez le champ status de type ENUM qui prendra les valeurs suivantes : "published", "unpublished", "draft" et qui par défaut aura la valeur "draft".
 
@@ -175,10 +175,15 @@ Ajoutez également la colonne numStreet.
 
 Supprimez cette nouvelle colonne puis recréez la en la plaçant cette fois après la colonne "name" de la table compagnies. Utilisez la commande suivante : AFTER dans la commande ALTER.
 
+Indication pour mettre une valeur par défaut sur un champ lors de sa définition ou alteration :
 
-## Exercice créer la table pilots
+```sql 
+city VARCHAR(20) DEFAULT 'Paris'
+```
 
-Créez la table pilots suivante dans la base donnes db_aviation.
+## 02 Exercice créer la table pilots
+
+- Créez la table pilots suivante dans la base donnes db_aviation.
 
 ```text
 +-------------+--------------+------+-----+---------+-------+
@@ -191,23 +196,10 @@ Créez la table pilots suivante dans la base donnes db_aviation.
 +-------------+--------------+------+-----+---------+-------+
 ```
 
-- Essayez de mettre le champ name unique en définissant une contrainte UNIQUE nommée sur ce champ. Utilisez la syntaxe suivante sur la table déjà existante :
-
-```sql
-CREATE TABLE `pilots` (
-    `certificate` VARCHAR(6),
-    `numFlying` DECIMAL(7,1),
-    `compagny` CHAR(4),
-    `name` VARCHAR(20) NOT NULL,
-    CONSTRAINT pk_pilots PRIMARY KEY (`certificate`)
-) ENGINE=InnoDB ;
-```
-
 - La table pilots possède une clé étrangère pilots.compagny qui se référencera à la clé **comp** de la table compagnies. Ci-dessous voici la définition de cette clé étrangère que vous devez implémenter également dans la table :
 
 ```sql
 ALTER TABLE pilots ADD CONSTRAINT fk_pilots_compagny FOREIGN KEY (compagny) REFERENCES compagnies(`comp`);
-
 ```
 
 Notez que la table compagnies existe déjà. En effet, pour que la clé étrangère se référence sur la clé primaire de la table compagnies, il faut qu'elle existe.
