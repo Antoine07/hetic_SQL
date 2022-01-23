@@ -85,7 +85,7 @@ VALUES
 
 ```
 
-## Exercice Ajouter une colonne created
+## 01 Exercice Ajouter une colonne created
 
 Ajoutez la colonne created dans la table pilots. Ajoutez l'option suivante à cette colonne :
 
@@ -113,7 +113,7 @@ Puis insérez les pilotes suivants :
 +-------------+-----------+----------+--------+---------------------+
 ```
 
-## Exercice ajout d'une colonne et mise à jour
+## 02 Exercice ajout d'une colonne et mise à jour
 
 Ajoutez les colonnes birth_date, next_flight, num_jobs dans la table pilots. Trouvez les meilleurs types pour définir ces colonnes.
 
@@ -205,7 +205,7 @@ TRUNCATE TABLE pilots ;
 
 ```
 
-## Exercice sauvegarde et suppression (facultatif)
+## 03 Exercice sauvegarde et suppression (facultatif)
 
 Créez la table new_pilots à l'aide de la commande suivante et supprimez toutes les lignes de la table pilots :
 
