@@ -34,11 +34,11 @@ Dans ce cas seule les colonnes mentionnées seront enregistrées. Attention cepe
 Vous pouvez enregistrer plusieurs lignes à la fois :
 
 ```sql
-INSERT INTO table (nom_colonne_1, nom_colonne_2, ...
+INSERT INTO table (nom_colonne_1, nom_colonne_2, ...)
  VALUES
  ('valeur 1', 'valeur 2', ...),
  ('valeur 11', 'valeur 22', ...),
- ('valeur 111', 'valeur 222', ...),
+ ('valeur 111', 'valeur 222', ...);
 ```
 
 
