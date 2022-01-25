@@ -161,6 +161,18 @@ SET `birth_date` = '1977-01-04 00:00:00',
  `next_flight` = '2020-05-04 12:50:52',
  `num_jobs` = 8
  WHERE name = 'Pierre';
+
+UPDATE `pilots`
+SET `birth_date` = '2001-03-04',
+	`next_flight` = '2022-04-04 07:50:52',
+	`num_jobs` = 30
+WHERE name = 'Alan';
+
+UPDATE `pilots`
+SET `birth_date` = '1978-02-04',
+	`next_flight` = '2022-12-04 09:50:52',
+	`num_jobs` = 10
+WHERE name = 'Tom';
 ```
 
 \newpage
@@ -227,9 +239,9 @@ pilots (
     `numFlying`,
     `compagny`,
     `name`,
-    `num_jobs`,
-    `next_flight`,
+    `created`,
     `birth_date`,
-    `created`
+    `next_flight`,
+    `num_jobs`
 ) SELECT * FROM `new_pilots`;
 ```

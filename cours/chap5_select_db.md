@@ -17,7 +17,7 @@ Une projection extrait qu'une ou plusieurs colonnes de la table :
 ```sql
 
 -- on sélectionne uniquement la colonne name (projection)
-SELECT `names` FROM pilots ;
+SELECT `name` FROM pilots ;
 
 -- on sélectionne deux colonnes
 SELECT name, certificate FROM pilots ;
