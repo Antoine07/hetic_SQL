@@ -2,19 +2,29 @@
 -- (On insère une compagnie dans compagnies pour éviter une erreur ensuite)
 INSERT INTO compagnies
 VALUES ('AFRA', 'a roissy', 'Roissy', 'Air France', '48', 'published');
+
+-- Afficher le contenu d'une table (pour vérifier ce qui s'ajoute dedans)
+SELECT * FROM nom_de_la_table
+-- Exemples :
+SELECT * FROM compagnies;
+SELECT * FROM pilots;
+
+
 -- On insère dans pilots
 INSERT INTO pilots
-VALUES ('aze123', '123.5', 'AFRA', 'Johnson');
+VALUES ('aze123', '123.5', 'AFRA', 'Johnson'); -- ==> ok
+
 INSERT INTO pilots
-VALUES ('zer458', null, 'AFRA', 'Sully');
+VALUES ('aze123', '123.5', 'Johnson'); -- plante car pas le bon nombre de champs
+-- on peut eventuellement corriger comme ça :
+INSERT INTO pilots
+VALUES ('aze124', '123.5', null, 'Johnson');
 
 INSERT INTO pilots
 (certificate, name)
- VALUES ('gfhf41', 'Harry');
+VALUES ('sdfs12', 'Sully');
 
-INSERT INTO pilots
-(compagny)
- VALUES ('AFRA'); -- Marche pas parce que certificate et name ne peuvent pas être NULL
+INSERT INTO pilots (certificate) VALUES ('sdfs13'); -- Plante car name ne peut pas être NULL
 
 INSERT INTO pilots
 SET certificate='sdf587', name='Ron';
@@ -28,22 +38,19 @@ VALUES
 -- Pas obligé de conserver l'ordre des champs tel qu'il est dans la table
 -- Mais l'ordre des valeurs doit correspondre à l'ordres des champs indiqués
 
--- Pour voir le contenu de la table :
-SELECT * FROM nom_de_la_table
--- Exemples :
-SELECT * FROM compagnies;
-SELECT * FROM pilots;
-
--- Insérez les données suivantes dans la table compagnies :
-
-INSERT INTO compagnies
-(comp, street, city, name, numStreet)
+INSERT INTO pilots (certificate, name, compagny)
 VALUES
-('AUS', 'sidney', 'Australie', 'AUSTRA Air', '19'),
-('CHI', 'chi', 'Chine', 'CHINA Air', NULL),
-('FRE1', 'beaubourg', 'France', 'Air France', '17'),
-('FRE2', 'paris', 'France', 'Air Electric', '22'),
-('SIN', 'pasir', 'Singapour', 'SIN A', '15');
+('wgt597', 'Harry', null);
+
+-- Remplir table compagnies
+INSERT INTO compagnies 
+(comp, street, city, name, numStreet, status) 
+VALUES
+('AUS', 'sidney', 'Australie', 'AUSTRA Air', 19, 'draft'),
+('CHI', 'chi', 'Chine', 'CHINA Air', NULL, 'draft'),
+('FRE1', 'beaubourg', 'France', 'Air France', 17, 'draft'),
+('FRE2', 'paris', 'France', 'Air Electric', 22, 'draft'),
+('SIN', 'pasir', 'Singapour', 'SIN A', 15, 'draft');
 
 -- ## 01 Exercice Ajouter une colonne created
 ALTER TABLE pilots ADD created DATETIME DEFAULT CURRENT_TIMESTAMP;
@@ -62,39 +69,34 @@ VALUES
     ('ct-16', 190, 'SIN', 'Yan' ),
     ('ct-56', 300, 'AUS', 'Benoit' );
 
--- Si vous souhaitez vider complètement la table :
-TRUNCATE la_table;
-TRUNCATE pilots; -- par exemple
-
--- Exercice ajout d'une colonne et mise à jour
--- Ajoutez les colonnes birth_date, next_flight, num_jobs dans la table pilots
-ALTER TABLE `pilots`
-ADD birth_date DATE,
+-- ## 02 Exercice ajout d'une colonne et mise à jour
+ALTER TABLE pilots ADD birth_date DATETIME;
+ALTER TABLE pilots ADD next_flight DATETIME;
+ALTER TABLE pilots ADD num_jobs SMALLINT UNSIGNED DEFAULT 0;
+-- ou bien en une seule fois :
+ALTER TABLE pilots 
+ADD birth_date DATETIME,
 ADD next_flight DATETIME,
 ADD num_jobs SMALLINT UNSIGNED DEFAULT 0;
 
--- Supprimer une table complète :
-DROP TABLE la_table;
-DROP TABLE pilots;
-
 -- Pour modifier un champs en cas de besoin :
-ALTER TABLE la_table
-CHANGE le_champs_a_changer nouveau_nom_du_champs TYPE_DE_CHAMPS AUTRES_OPTIONS;
+ALTER TABLE la_table CHANGE le_champs_a_changer nouveau_nom_du_champs_si_besoin TYPE_DE_CHAMPS AUTRES_OPTIONS;
 -- ex :
 ALTER TABLE pilots CHANGE num_jobs num_jobs SMALLINT DEFAULT 0;
-
-UPDATE `pilots`
-SET `birth_date` = '1978-02-04 00:00:00',
- `next_flight` = '2020-12-04 09:50:52',
- `num_jobs` = 10
- WHERE name = 'Yi';
--- On modifie aussi les autre (voir code dans le cours)
+ALTER TABLE pilots CHANGE next_flying next_flight DATETIME;
 
 -- ## Commande de suppression DELETE ou TRUNCATE
+TRUNCATE la_table;
 TRUNCATE pilots; -- Vide complètement la table (remet les auto-increment à 0)
 DELETE FROM pilots; -- Vide complètement la table (conserve la valeur de l'auto-increment)
 
-DELETE FROM pilots WHERE name = 'albert';
+DELETE FROM pilots [WHERE (condition)];
+DELETE FROM pilots WHERE name = 'Johnson';
 DELETE FROM pilots WHERE name = "albert" AND company = "AUS";
 
-DROP TABLE new_pilots;
+-- Ne pas confondre TRUNCATE la_table avec DROP TABLE la_table
+DROP TABLE la_table; -- Suprime TOUT, y compris la table elle-même !
+
+-- ## 03 Exercice sauvegarde et suppression (facultatif)
+-- dupliquer la table pilots dans new_pilots :
+CREATE TABLE `new_pilots` (SELECT * FROM `pilots`);
