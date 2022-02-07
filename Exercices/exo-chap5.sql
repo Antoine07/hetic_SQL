@@ -55,8 +55,17 @@ select YEAR(next_flight) from pilots; -- retourne l'année du prochain vol de ch
 
 --- LUNDI 7 fevrier corrections et revisions @Antoine GROUPE 01
 
+--- LUNDI 7 fevrier corrections et revisions @Antoine GROUPE 01
+
+-- Comptez le nombre d'heure de vols distincts
+
+SELECT COUNT(numFlying) FROM pilots; -- compte toutes les heures même identiques
+
+SELECT COUNT( DISTINCT numFlying ) FROM pilots; -- compte toutes les heures distincts
+
+
 -- 1 
-SELECT * FROM pilots WHERE compagny= "AUS";
+SELECT name FROM pilots WHERE compagny= "AUS";
 
 -- 2 on peut ajouter dans la projection des comandes cela crée une colonne en plus
 
@@ -65,122 +74,139 @@ SELECT name FROM pilots WHERE compagny= "FRE1" AND numFlying > 15;
 -- 3.0 Sélectionnez les noms des pilotes de la compagnie FRE1 ayant fait plus de 20 heures de vols.
 
 SELECT name FROM pilots WHERE compagny= "FRE1" AND numFlying > 20 ;
-SELECT name FROM pilots WHERE compagny= "FRE1" AND numFlying > 20 AND numFlying < 10 ;
 
--- 3.1 comptez le nombre de pilotes qui on fait plus de 20 heures de vols ?
+-- Sélectionnez les noms des pilotes de la compagnie FRE1 ayant fait entre 10 et 20 heures de vols.
 
-SELECT COUNT(*) FROM pilots WHERE numFlying > 20; 
-
--- 3.2 On aimerait connaitre tous les heures de vols distincts des pilots
-
-SELECT DISTINCT numFlying FROM pilots; -- commande DISTINCT unique représentant dans l'ensemble
-
--- 4 Sélectionnez les noms des pilotes de la compagnie FRE1 ou AUST ayant fait plus de 20 de vols.
-
-SELECT name, compagny FROM pilots WHERE ( compagny = 'FRE1' OR compagny = 'AUS' ) AND numFlying > 20 ; 
-SELECT name, compagny FROM pilots WHERE compagny IN ('AUS', 'FRE1') AND numFlying > 20 ; 
-
--- 5 Sélectionnez les noms des pilotes ayant fait entre 190 et 200 heures de vols.
-
-SELECT name, numFlying FROM pilots WHERE numFlying BETWEEN 190 AND 200 ;
+SELECT name FROM pilots WHERE compagny= "FRE1" AND numFlying > 10 AND numFlying < 20 ;
 
 
--- 6 Sélectionnez les noms des pilotes qui sont nés après 1978.
+-- Sélectionnez les noms des pilotes de la compagnie FRE1 ou AUS ayant fait plus de 20 de vols.
+
+-- attention AND est prioritaire par rapport à OR, n'oubliez pas les parenthèses
+
+SELECT name 
+FROM pilots
+WHERE ( compagny = 'FRE1' OR compagny = 'AUS' ) AND numFlying > 20;
+
+-- Sélectionnez les noms des pilotes ayant fait entre 190 et 200 heures de vols.
+-- Attention le between est large il prend les "bornes" de l'intervalle.
+
+SELECT name 
+FROM pilots
+WHERE numFlying BETWEEN 190 AND 200;
+
+-- Sélectionnez les noms des pilotes qui sont nés après 1978.
+
 
 SELECT name, birth_date
 FROM pilots
-WHERE birth_date> '1978';
+WHERE birth_date > '1978';
 
--- 7 Sélectionnez les noms des pilotes qui sont nés avant 1978.
+
+-- Sélectionnez les noms des pilots qui sont nés après mars 1978
+
+SELECT name, birth_date
+FROM pilots
+WHERE birth_date > '1978-03';
+
+-- Sélectionnez les noms des pilotes qui sont nés avant 1978.
 
 SELECT name, birth_date
 FROM pilots
 WHERE birth_date < '1978';
 
--- 8 Sélectionnez les noms des pilotes qui sont nés entre 1978 et 2000.
+-- Sélectionnez les noms des pilotes qui sont nés entre 1978 et 2000.
 
 SELECT name, birth_date
 FROM pilots
-WHERE birth_date > '1978' AND birth_date < '2000' ;
+WHERE birth_date > '1978' AND birth_date < '2000';
 
--- 9 Quels sont les pilotes qui ont un vol programmé après 2020-05-08 ?
-
-SELECT name as n , next_flight as nf
+-- Attention dans ce cas on aura les années 2000
+SELECT name, birth_date
 FROM pilots
-WHERE next_flight > '2020-05-08 : 00:00:00';
+WHERE YEAR(birth_date) BETWEEN '1978' AND  '1999';
 
--- 10 Calculez la somme du nombre d'heures de vols
 
-SELECT SUM(numFlying) FROM pilots;
+-- Quels sont les pilotes qui ont un vol programmé après 2020-05-08 ?
 
--- 10.1 Calculez la fréquence du nombre d'heure de vols par pilots
+SELECT name, next_flight
+FROM pilots
+WHERE next_flight > '2020-05-08';
 
-SELECT ROUND( numFlying / (SELECT SUM(numFlying) FROM pilots) , 2 ) * 100 as freq_h_pilots
+
+-- Sélectionnez tous les noms des pilotes qui sont dans les compagnies : AUS et FRE1.
+
+SELECT name FROM pilots WHERE compagny = 'AUS' AND compagny = 'FRE1';
+
+-- Sélectionnez tous les noms des pilotes qui sont dans les compagnies : AUS ou FRE1.
+
+SELECT name FROM pilots WHERE compagny = 'AUS' OR compagny = 'FRE1';
+
+SELECT name FROM pilots WHERE compagny IN ( 'AUS', 'FRE1' );
+
+-- Sélectionnez tous les noms des pilotes qui ne travaillent pas pour les compagnies : AUS ou FRE1.
+
+SELECT name FROM pilots WHERE compagny NOT IN ( 'AUS', 'FRE1' );
+
+SELECT name FROM pilots WHERE compagny != 'AUS' AND compagny != 'FRE1';
+
+-- Sélectionnez tous les des pilotes dont le nom de compagnie contient un A.
+
+-- Calculez la somme des heures de vols des pilots 
+
+SELECT SUM(numFlying) 
 FROM pilots;
 
-/*
-POINT DE COURS
-On peut dans un SELECT effectuer des calculs avec des sous requêtes qui renvoient des valeurs avec les fonctions comme AVG, COUNT, SUM par exemple
-*/
+-- Calculez la fréquence des heures de vols de chaque pilote par rapport au total des heures de vols
 
--- 11 Sélectionnez tous les noms des pilotes qui sont dans les compagnies : AUS et FRE1.
+SELECT ROUND( numFlying / (SELECT SUM(numFlying)  FROM pilots), 2 ) * 100 as fq_nbflying
+FROM pilots;
 
--- 11.1 Cette requête ne renvoie aucun résultat 
 
-SELECT name 
-FROM pilots
-WHERE compagny = 'AUS' AND compagny = 'FRE1';
-
--- 11.2 Sélectionnez tous les noms des pilotes qui sont soient dans les compagnies : AUS ou FRE1.
+-- Sélectionnez tous les des pilotes dont le nom de compagnie contient un A.
 
 SELECT name, compagny
-FROM pilots
-WHERE compagny IN ('FRE1', 'AUS');
-
-
--- 11.3 Sélectionnez tous les noms des pilotes qui ne sont pas dans les compagnies : AUS et FRE1.
-
-SELECT name, compagny
-FROM pilots
-WHERE compagny NOT IN ('FRE1', 'AUS');
-
-
---- 12 Sélectionnez tous les des pilotes dont le nom de compagnie contient un A.
-
-/*
- %A% n'importe quel caractère avant ou après et un A ou a même chose dans la recherche CI dans la chaîne
-*/
-
-SELECT name
 FROM pilots
 WHERE compagny LIKE '%a%';
 
+-- Sélectionnez tous les pilotes dont le nom de la compagnie commence par un F.
 
--- 13 Sélectionnez tous les pilotes dont le nom de la compagnie commence par un F.
-
-SELECT name
+SELECT name, compagny
 FROM pilots
 WHERE compagny LIKE 'f%';
 
--- 14 Sélectionnez tous les pilotes dont le nom de la compagnie contient un I suivi d'un caractère.
+-- Sélectionnez tous les pilotes dont le nom de la compagnie contient un I suivi d'un caractère.
 
-SELECT name
-FROM pilots
-WHERE compagny LIKE '%i_';
-
-
--- 15 Récupérez tous les noms des pilotes dont le nom de leur compagnie se termine par R suivi de 2 caractères exactement
-
-SELECT name, compagny 
+SELECT name,compagny 
 FROM pilots 
-WHERE compagny REGEXP '.*r.{2}$';
+WHERE compagny LIKE '%i_';  
 
-/*
+-- 
 
-. n'importe quel caractère
-* 0 à N caractère(s)
-r le caractère r
-{2} exactement 2
-$ se termine
+ALTER TABLE pilots
+DROP bonus;
 
-*/
+ALTER TABLE pilots
+ADD bonus SMALLINT UNSIGNED AFTER certificate;
+
+
+UPDATE `pilots` 
+SET `bonus` = 1000 
+WHERE `certificate` IN ('ct-1', 'ct-11', 'ct-12');
+
+UPDATE `pilots` 
+SET `bonus` = 2000 
+WHERE `certificate` IN ('ct-56'); 
+
+UPDATE `pilots` 
+SET `bonus` = 500 
+WHERE `bonus` IS NULL; 
+
+-- avec un case when on peut mettre à jour nos données en une commande.
+UPDATE `pilots` 
+SET `bonus` = (
+    CASE 
+        WHEN certificate IN ('ct-1', 'ct-11', 'ct-12') THEN 1000
+        WHEN certificate IN ('ct-56') THEN 2000
+        ELSE 500
+    END);
