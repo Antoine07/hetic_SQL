@@ -52,3 +52,135 @@ SELECT ROUND( RAND() * 100 ) + 1; -- Retourne une valeur aléatoire entre 1 et 1
 select * from pilots where YEAR(next_flight) > 2021; -- retourne les pilotes dont l'année du prochain vol est (strictement) après 2021
 select * from pilots where YEAR(next_flight) >= 2021; -- retourne les pilotes dont l'année du prochain vol est à partir de 2021 (compris)
 select YEAR(next_flight) from pilots; -- retourne l'année du prochain vol de chaque pilote
+
+--- LUNDI 7 fevrier corrections et revisions @Antoine GROUPE 01
+
+-- 1 
+SELECT * FROM pilots WHERE compagny= "AUS";
+
+-- 2 on peut ajouter dans la projection des comandes cela crée une colonne en plus
+
+SELECT name FROM pilots WHERE compagny= "FRE1" AND numFlying > 15;
+
+-- 3.0 Sélectionnez les noms des pilotes de la compagnie FRE1 ayant fait plus de 20 heures de vols.
+
+SELECT name FROM pilots WHERE compagny= "FRE1" AND numFlying > 20 ;
+SELECT name FROM pilots WHERE compagny= "FRE1" AND numFlying > 20 AND numFlying < 10 ;
+
+-- 3.1 comptez le nombre de pilotes qui on fait plus de 20 heures de vols ?
+
+SELECT COUNT(*) FROM pilots WHERE numFlying > 20; 
+
+-- 3.2 On aimerait connaitre tous les heures de vols distincts des pilots
+
+SELECT DISTINCT numFlying FROM pilots; -- commande DISTINCT unique représentant dans l'ensemble
+
+-- 4 Sélectionnez les noms des pilotes de la compagnie FRE1 ou AUST ayant fait plus de 20 de vols.
+
+SELECT name, compagny FROM pilots WHERE ( compagny = 'FRE1' OR compagny = 'AUS' ) AND numFlying > 20 ; 
+SELECT name, compagny FROM pilots WHERE compagny IN ('AUS', 'FRE1') AND numFlying > 20 ; 
+
+-- 5 Sélectionnez les noms des pilotes ayant fait entre 190 et 200 heures de vols.
+
+SELECT name, numFlying FROM pilots WHERE numFlying BETWEEN 190 AND 200 ;
+
+
+-- 6 Sélectionnez les noms des pilotes qui sont nés après 1978.
+
+SELECT name, birth_date
+FROM pilots
+WHERE birth_date> '1978';
+
+-- 7 Sélectionnez les noms des pilotes qui sont nés avant 1978.
+
+SELECT name, birth_date
+FROM pilots
+WHERE birth_date < '1978';
+
+-- 8 Sélectionnez les noms des pilotes qui sont nés entre 1978 et 2000.
+
+SELECT name, birth_date
+FROM pilots
+WHERE birth_date > '1978' AND birth_date < '2000' ;
+
+-- 9 Quels sont les pilotes qui ont un vol programmé après 2020-05-08 ?
+
+SELECT name as n , next_flight as nf
+FROM pilots
+WHERE next_flight > '2020-05-08 : 00:00:00';
+
+-- 10 Calculez la somme du nombre d'heures de vols
+
+SELECT SUM(numFlying) FROM pilots;
+
+-- 10.1 Calculez la fréquence du nombre d'heure de vols par pilots
+
+SELECT ROUND( numFlying / (SELECT SUM(numFlying) FROM pilots) , 2 ) * 100 as freq_h_pilots
+FROM pilots;
+
+/*
+POINT DE COURS
+On peut dans un SELECT effectuer des calculs avec des sous requêtes qui renvoient des valeurs avec les fonctions comme AVG, COUNT, SUM par exemple
+*/
+
+-- 11 Sélectionnez tous les noms des pilotes qui sont dans les compagnies : AUS et FRE1.
+
+-- 11.1 Cette requête ne renvoie aucun résultat 
+
+SELECT name 
+FROM pilots
+WHERE compagny = 'AUS' AND compagny = 'FRE1';
+
+-- 11.2 Sélectionnez tous les noms des pilotes qui sont soient dans les compagnies : AUS ou FRE1.
+
+SELECT name, compagny
+FROM pilots
+WHERE compagny IN ('FRE1', 'AUS');
+
+
+-- 11.3 Sélectionnez tous les noms des pilotes qui ne sont pas dans les compagnies : AUS et FRE1.
+
+SELECT name, compagny
+FROM pilots
+WHERE compagny NOT IN ('FRE1', 'AUS');
+
+
+--- 12 Sélectionnez tous les des pilotes dont le nom de compagnie contient un A.
+
+/*
+ %A% n'importe quel caractère avant ou après et un A ou a même chose dans la recherche CI dans la chaîne
+*/
+
+SELECT name
+FROM pilots
+WHERE compagny LIKE '%a%';
+
+
+-- 13 Sélectionnez tous les pilotes dont le nom de la compagnie commence par un F.
+
+SELECT name
+FROM pilots
+WHERE compagny LIKE 'f%';
+
+-- 14 Sélectionnez tous les pilotes dont le nom de la compagnie contient un I suivi d'un caractère.
+
+SELECT name
+FROM pilots
+WHERE compagny LIKE '%i_';
+
+
+-- 15 Récupérez tous les noms des pilotes dont le nom de leur compagnie se termine par R suivi de 2 caractères exactement
+
+SELECT name, compagny 
+FROM pilots 
+WHERE compagny REGEXP '.*r.{2}$';
+
+/*
+
+. n'importe quel caractère
+* 0 à N caractère(s)
+r le caractère r
+{2} exactement 2
+$ se termine
+
+*/
