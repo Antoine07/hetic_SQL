@@ -162,6 +162,17 @@ FROM pilots;
 SELECT ROUND( numFlying / (SELECT SUM(numFlying)  FROM pilots), 2 ) * 100 as fq_nbflying
 FROM pilots;
 
+-- Autres arrondis :
+SELECT numFlying / 2.6 as fq_nbflying
+FROM pilots;
+SELECT ROUND(numFlying / 2.6, 2) as fq_nbflying
+FROM pilots;
+-- Arrondi à l'entier inférieur
+SELECT FLOOR(numFlying / 2.6) as fq_nbflying
+FROM pilots;
+-- Arrondi à l'entier supérieur
+SELECT CEIL(numFlying / 2.6) as fq_nbflying
+FROM pilots;
 
 -- Sélectionnez tous les des pilotes dont le nom de compagnie contient un A.
 
@@ -181,14 +192,13 @@ SELECT name,compagny
 FROM pilots 
 WHERE compagny LIKE '%i_';  
 
--- 
+-- modification de la table pilots :
 
 ALTER TABLE pilots
 DROP bonus;
 
 ALTER TABLE pilots
 ADD bonus SMALLINT UNSIGNED AFTER certificate;
-
 
 UPDATE `pilots` 
 SET `bonus` = 1000 
@@ -210,3 +220,19 @@ SET `bonus` = (
         WHEN certificate IN ('ct-56') THEN 2000
         ELSE 500
     END);
+
+-- pilote ayant eu le meilleur bonus
+SELECT MAX(bonus) FROM pilots; -- Donne le meilleur bonus
+
+SELECT name, bonus FROM pilots
+WHERE bonus = (SELECT MAX(bonus) FROM pilots); -- donne le nom du pilot avec le meilleur bonus
+
+
+-- heures de vols distincts dans la table pilots
+SELECT DISTINCT numFlying FROM pilots; -- liste les différents nb d'heures de vol
+SELECT COUNT(DISTINCT numFlying) as nbflyhours FROM pilots; -- affiche les nbs d'heures différents
+
+
+-- Combien de pilotes sont en dessous de la moyenne d'heure de vols ?
+SELECT AVG(numFlying) FROM pilots; -- moyenne d'heures de vol
+SELECT name FROM pilots WHERE numFlying < (SELECT AVG(numFlying) FROM pilots); -- liste des pilotes sous la moyenne
