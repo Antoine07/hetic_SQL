@@ -230,9 +230,10 @@ WHERE bonus = (SELECT MAX(bonus) FROM pilots); -- donne le nom du pilot avec le 
 
 -- heures de vols distincts dans la table pilots
 SELECT DISTINCT numFlying FROM pilots; -- liste les différents nb d'heures de vol
-SELECT COUNT(DISTINCT numFlying) as nbflyhours FROM pilots; -- affiche les nbs d'heures différents
+SELECT COUNT(DISTINCT numFlying) as nbflyhours FROM pilots; -- affiche le nombre de nombre d'heures différents
 
 
 -- Combien de pilotes sont en dessous de la moyenne d'heure de vols ?
 SELECT AVG(numFlying) FROM pilots; -- moyenne d'heures de vol
 SELECT name FROM pilots WHERE numFlying < (SELECT AVG(numFlying) FROM pilots); -- liste des pilotes sous la moyenne
+SELECT COUNT(*) FROM pilots WHERE numFlying < (SELECT AVG(numFlying) FROM pilots); -- résultat demandé = nombre de pilots sous la moyenne d'heures

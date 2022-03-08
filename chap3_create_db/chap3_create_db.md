@@ -22,7 +22,7 @@ La clé primaire (Primary Key) d'une table est l'ensemble minimal de colonnes qu
 
 **Attention, il ne peut y avoir qu'une seule clé primaire dans une table relationnel.**
 
-![table pk](images/pk.png)
+![table pk](../images/pk.png)
 
 \newpage
 
@@ -36,7 +36,7 @@ UNIQUE et NOT NULL se comprennent facilement. Un INDEX pour sa part est une stru
 
 La clé étrangère (Foreign Key), elle référence dans la majorité des cas une clé primaire d'une autre table. Il peut y avoir plusieurs clés étrangères dans une même table.
 
-![table pk](images/relation_fk_pk.png)
+![table pk](../images/relation_fk_pk.png)
 
 Notons qu'une clé étrangère lorsqu'elle se référence sur une clé primaire d'une autre table possède **EXACTEMENT** le type de la clé primaire référencée.
 

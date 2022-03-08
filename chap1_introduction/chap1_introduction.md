@@ -57,13 +57,13 @@ MySQL est sous la licence GPL, propriétaire détenue par ORACLE.
 
 Un serveur de base de données contient donc plusieurs base de données. Ces bases de données contiennent des tables.
 
-![sgdb](images/sgbd.png)
+![sgdb](../images/sgbd.png)
 
 \newpage
 
 Sur un serveur de base de données vous avez des accès privilégiés, avec des droits spécifiques sur une base ou plusieurs base de données.
 
-![sgdb](images/connect.png)
+![sgdb](../images/connect.png)
 
 \newpage
 
