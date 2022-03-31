@@ -188,6 +188,16 @@ call set_data('ITA');
 ## 03 Exercices sales ROLLUP
 
 1. Calculez les profits de chaque compagny par année, ainsi que le total par année pour toutes les compagnies et enfin le total global des profits.
+```sql
+SELECT year(created_at) as year, compagny, sum(profit) as CA
+FROM sales
+GROUP BY year, compagny WITH ROLLUP;
 
+```
 
 2. Calculez maintenant par année et par mois avec la même granularité que la question 1 respectivement par rapport à ce dernier regroupement.
+```sql
+SELECT year(created_at) as year,month(created_at) as month, compagny, sum(profit) as CA
+FROM sales
+GROUP BY year, month, compagny WITH ROLLUP;
+```
