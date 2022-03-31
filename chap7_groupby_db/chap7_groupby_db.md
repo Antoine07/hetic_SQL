@@ -83,6 +83,14 @@ Calculez l'étendue du nombre d'heure de vol par compagnie.
 09. Exercice moyenne des heures de vol
 
 Afficher la moyenne des heures de vol pour les compagnies qui sont en France.
+```sql
+SELECT AVG(numflying) 
+FROM pilots 
+WHERE compagny IN (
+	SELECT comp FROM compagnies 
+	WHERE city = 'France')
+GROUP BY compagny ;
+```
 
 
 ## ROLLUP & CUBE
@@ -105,10 +113,21 @@ Le ROLLUP permettra de faire les regroupements suivants : col1 et col1, col2 et 
 
 **Création de la table sales référencée à la table compagnies, avec les champs suivants**
 
-id : bigint unsigned auto increment (clé primaire)
+id : bigint unsigned auto_increment (clé primaire)
 created_at : date avec une date par défaut à 1980-01-01
-compagny : clé étrangère référencée à la table compagnies
+compagny : clé étrangère référencée à la table compagnies (champs comp)
 profit : champ décimale de 15 chiffres avec 2 chiffres après la virgule.
+```sql
+DROP TABLE IF EXISTS sales;
+CREATE TABLE `sales` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `created_at` DATE DEFAULT '1980-01-01',
+    `compagny` CHAR(4),
+    `profit` DECIMAL(15,2),
+    CONSTRAINT pk_id PRIMARY KEY (`id`),
+    CONSTRAINT fk_sales_compagny FOREIGN KEY (compagny) REFERENCES compagnies(`comp`)
+) ENGINE=InnoDB ;
+```
 
 
 
