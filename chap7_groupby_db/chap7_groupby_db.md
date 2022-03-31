@@ -84,9 +84,6 @@ Calculez l'étendue du nombre d'heure de vol par compagnie.
 
 Afficher la moyenne des heures de vol pour les compagnies qui sont en France.
 
-```sql
-SELECT compagny, AVG(numflying) as moyenne FROM pilots WHERE compagny IN (SELECT comp FROM compagnies WHERE city in ('France','australie')) GROUP BY compagny;
-```
 
 ## ROLLUP & CUBE
 
@@ -112,17 +109,7 @@ id : bigint unsigned auto increment (clé primaire)
 created_at : date avec une date par défaut à 1980-01-01
 compagny : clé étrangère référencée à la table compagnies
 profit : champ décimale de 15 chiffres avec 2 chiffres après la virgule.
-```sql
-DROP TABLE IF EXISTS sales;
-CREATE TABLE `sales` (
-    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `created_at` DATE DEFAULT '1980-01-01',
-    `compagny` CHAR(4),
-    `profit` DECIMAL(15,2),
-    CONSTRAINT pk_id PRIMARY KEY (`id`),
-	CONSTRAINT fk_sales_compagny FOREIGN KEY (compagny) REFERENCES compagnies(`comp`)
-) ENGINE=InnoDB ;
-```
+
 
 
 2. Procédure découverte 
@@ -179,3 +166,9 @@ call set_data('SIN');
 call set_data('FRE1');
 call set_data('ITA');
 ```
+## 03 Exercices sales ROLLUP
+
+1. Calculez les profits de chaque compagny par année, ainsi que le total par année pour toutes les compagnies et enfin le total global des profits.
+
+
+2. Calculez maintenant par année et par mois avec la même granularité que la question 1 respectivement par rapport à ce dernier regroupement.
