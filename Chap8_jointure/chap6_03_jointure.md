@@ -66,14 +66,14 @@ JOIN compagnies as c ON comp = compagny
 WHERE c.city = 'France'
 GROUP BY compagny;
 
--- exemple avec un LEFT JOIN  (pas d edifférence ici)
+-- exemple avec un LEFT JOIN (pas de différence ici)
 SELECT AVG(numFlying)
 FROM pilots
 LEFT JOIN compagnies as c ON comp = compagny
 WHERE c.city = 'France'
 GROUP BY compagny;
 
--- Exemple avec un RIGHT JOIN => permet d'avoir un résultat supplmentaire, celuide Air Electric
+-- Exemple avec un RIGHT JOIN => permet d'avoir un résultat supplmentaire, celui de Air Electric
 SELECT AVG(numFlying)
 FROM pilots
 RIGHT JOIN compagnies as c ON comp = compagny
