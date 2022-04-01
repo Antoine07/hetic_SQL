@@ -4,11 +4,100 @@
 
 Ajoutez la clé étrangère "lead_pl" dans la table pilots. Cette clé étrangère se référencera à la clé primaire de la même table.
 
+```sql
+ALTER TABLE `pilots` 
+ADD COLUMN `lead_pl` VARCHAR(6) AFTER `certificate`,
+ADD CONSTRAINT `fk_pilots_lead` 
+    FOREIGN KEY (`lead_pl`) 
+    REFERENCES `pilots` (`certificate`);
+```
+
+
 ![relation lead_pilot](../images/lead_pilot.png)
 
 Mettez à jour la table pilots sachant que Pierre est le chef pilote de Alan, Tom et Yi. Et que Jhon est le chef pilote de Sophie, Albert et Yam.
 
-Ecrire et exécuter une requête pour déterminer les pilotes qui n'ont pas de chef.
+```sql
+UPDATE pilots 
+SET lead_pl = 'ct-7'
+WHERE name IN ('alan', 'Tom', 'Yi');
+
+UPDATE pilots 
+SET lead_pl = 'ct-6'
+WHERE name IN ('Albert', 'Sophie', 'Yan');
+
+-- Ou bien :
+UPDATE `pilots` 
+SET `lead_pl` = (
+    CASE 
+        WHEN name IN ('alan', 'Tom', 'Yi') THEN 'ct-7'
+        WHEN name IN ('Albert', 'Sophie', 'Yan') THEN 'ct-6'
+        ELSE NULL
+    END);
+
+-- Ou bien :
+UPDATE `pilots` as p
+SET `lead_pl` = (
+    CASE 
+        WHEN p.name IN ('alan', 'Tom', 'Yi') THEN (
+            SELECT certificate FROM (
+                SELECT p2.certificate 
+                FROM pilots as p2 
+                WHERE p2.name = 'Pierre'
+            ) as p22
+        )
+        WHEN p.name IN ('Albert', 'Sophie', 'Yan') THEN (
+            SELECT certificate FROM (
+                SELECT p3.certificate 
+                FROM pilots as p3 
+                WHERE p3.name = 'Jhon'
+            ) as p33
+        )
+        ELSE NULL
+    END);
+```
+Afficher la moyenne des heures de vol pour les compagnies qui sont en France, AVEC UNE JOINTURE.
+
+```SQL
+-- Moyenne demandée
+SELECT AVG(numFlying)
+FROM pilots
+JOIN compagnies as c ON comp = compagny
+WHERE c.city = 'France'
+GROUP BY compagny;
+
+-- exemple avec un LEFT JOIN  (pas d edifférence ici)
+SELECT AVG(numFlying)
+FROM pilots
+LEFT JOIN compagnies as c ON comp = compagny
+WHERE c.city = 'France'
+GROUP BY compagny;
+
+-- Exemple avec un RIGHT JOIN => permet d'avoir un résultat supplmentaire, celuide Air Electric
+SELECT AVG(numFlying)
+FROM pilots
+RIGHT JOIN compagnies as c ON comp = compagny
+WHERE c.city = 'France'
+GROUP BY compagny;
+
+-- On récupère en plus le nom de chaque compagnie
+SELECT c.name, AVG(numFlying)
+FROM pilots
+RIGHT JOIN compagnies as c ON comp = compagny
+WHERE c.city = 'France'
+GROUP BY compagny, c.name;
+```
+
+
+Ecrire et exécuter une requête pour déterminer les pilotes qui n'ont pas de chef. Afficher aussi le nom de leur compagnie.
+
+```sql
+SELECT p.name as pilotName, c.name as compagnyName
+FROM pilots p 
+JOIN compagnies c ON p.compagny = c.comp 
+WHERE lead_pl IS NULL;
+```
+
 
 *Jointures internes.*
 
