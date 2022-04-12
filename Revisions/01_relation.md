@@ -17,7 +17,6 @@ Correction :
 CREATE DATABASE IF NOT EXISTS `db_blog`
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-
 use db_blog;
 
 CREATE TABLE `posts` (
@@ -26,7 +25,7 @@ CREATE TABLE `posts` (
     `content` TEXT NULL,
     `publish_at` DATETIME NULL,
     CONSTRAINT pk_posts PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB ;
+    ) ENGINE=InnoDB;
 
 CREATE TABLE `categories` (
     `id` BIGINT NOT NULL AUTO_INCREMENT  , 
@@ -50,3 +49,9 @@ ADD CONSTRAINT `fk_posts_categories_id`
 ```
 
 implémentez la relation entre les deux tables avec un atler table.
+
+- 1. Création de la catégorie PHP
+
+```sql
+INSERT INTO categories SET title="PHP";
+```
