@@ -14,6 +14,8 @@ Correction :
 
 ```sql
 
+DROP DATABASE IF EXISTS `db_blog`;
+
 CREATE DATABASE IF NOT EXISTS `db_blog`
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -23,7 +25,7 @@ CREATE TABLE `posts` (
     `id` BIGINT NOT NULL AUTO_INCREMENT, 
     `title` VARCHAR(100),
     `content` TEXT NULL,
-    `publish_at` DATETIME NULL,
+    `published_at` DATETIME NULL,
     CONSTRAINT pk_posts PRIMARY KEY (`id`)
     ) ENGINE=InnoDB;
 
@@ -58,3 +60,14 @@ INSERT INTO categories SET title="PHP";
 INSERT INTO posts SET title="les nouvelles features de PHP", category_id = 1 ;
 INSERT INTO posts SET title="PHP est-il asynchrone ?", category_id = 1 ;
 ```
+
+- Impossible si il existe des/une référence(s) dans la table posts à cette catégorie dont la clé id est égale à 1.
+
+```sql
+DELETE FROM categories WHERE id = 1 ;
+```
+
+- Supposons que la catégorie 190 n'existe, la commande suivante est bloquée :
+
+```sql
+INSERT INTO posts SET title="Python expressivité", category_id = 190 ;
