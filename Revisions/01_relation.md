@@ -1,4 +1,4 @@
-# Révisions
+# Révisions groupe 1 & 2
 
 ## 01 exercices tables
 
