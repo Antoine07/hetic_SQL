@@ -14,12 +14,15 @@ Correction :
 
 ```sql
 
+CREATE DATABASE IF NOT EXISTS `db_blog`
+CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 CREATE TABLE `posts` (
      `id` INT  
     `title` VARCHAR(100),
     `content` TEXT NULL,
     `publish_at` DATETIME NULL,
-    CONSTRAINT pk_posts PRIMARY KEY (`id`)
+    CONSTRAINT pk_posts PRIMARY KEY (`id`) AUTO_INCREMENT=1;
     ) ENGINE=InnoDB ;
 
 CREATE TABLE `categories` (
@@ -30,3 +33,12 @@ CREATE TABLE `categories` (
     ) ENGINE=InnoDB ;
 
 ``` 
+
+Relation entre les deux tables 
+
+```sql
+CREATE DATABASE IF NOT EXISTS `db_blog`
+CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+implémentez la relation entre les deux tables avec un atler table.
