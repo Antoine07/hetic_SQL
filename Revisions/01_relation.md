@@ -54,4 +54,7 @@ implémentez la relation entre les deux tables avec un atler table.
 
 ```sql
 INSERT INTO categories SET title="PHP";
+
+INSERT INTO posts SET title="les nouvelles features de PHP", category_id = 1 ;
+INSERT INTO posts SET title="PHP est-il asynchrone ?", category_id = 1 ;
 ```
