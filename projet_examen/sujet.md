@@ -101,7 +101,7 @@ Comment cela va-t-il fonctionner ? Et bien par exemple, si vous supprimez l'avio
 
 ## Exercices
 
-### 1. Écrire les relations
+### Introduction
 
 Nous voulons créer une table `trips`. Elle contiendra les colonnes suivantes (choisissez le type de ces champs en fonction de ce qu'ils représentent) :
 
@@ -111,11 +111,15 @@ Nous voulons créer une table `trips`. Elle contiendra les colonnes suivantes (c
 - arrival
 - created
 
-Vous allez essayer d'écrire les relations entre la table `pilots` et `trips` en faisant des phrases en français pour expliciter leurs [cardinalités](https://laurent-audibert.developpez.com/Cours-BD/?page=conception-des-bases-de-donnees-modele-a#L2-2-5).
+### 1. Écrire les relations
+
+Dans un premier temps, vous allez essayer d'écrire les relations entre la table `pilots` et `trips` en faisant des phrases en français pour expliciter leurs [cardinalités](https://laurent-audibert.developpez.com/Cours-BD/?page=conception-des-bases-de-donnees-modele-a#L2-2-5).
+
+_Vous créerez la table à [l'exercice 3](#3-passer-au-code)_
 
 ### 2. Schéma
 
-Faites un schéma sur papier, type UML, pour expliciter la relation entre les tables `pilots` et `trips`.
+Faites un schéma sur papier ou à l'aide d'un outil comme [Excalidraw](https://excalidraw.com/), type UML (voir [schema](images/schema.png)), pour expliciter la relation entre les tables `pilots` et `trips`.
 
 ### 3. Passer au code
 
@@ -125,11 +129,11 @@ Implémentez le code pour rendre effectif votre représentation des relations da
 
 #### Ajouter des enregistrements
 
-Vous allez maintenant ajouter les enregistrements suivants (voir les sources sur la plateforme) :
+Une fois les tables créées, vous pourrez ajouter les enregistrements suivants (voir les sources sur la plateforme) :
 
 ```sql
 INSERT INTO `trips`
- (`name`, `depature`, `arrival`, `created`)
+ (`name`, `departure`, `arrival`, `created`)
 VALUES
 ('direct', 'Paris', 'Brest',  '2020-01-01 00:00:00'),
 ('direct', 'Paris', 'Berlin',  '2020-02-01 00:00:00'),
