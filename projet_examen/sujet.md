@@ -138,7 +138,7 @@ VALUES
 ('direct', 'Paris', 'Brest',  '2020-01-01 00:00:00'),
 ('direct', 'Paris', 'Berlin',  '2020-02-01 00:00:00'),
 ('direct', 'Paris', 'Barcelone',  '2020-08-01 00:00:00'),
-('direct', 'Amsterdan', 'Brest',  '2020-11-11 00:00:00'),
+('direct', 'Amsterdam', 'Brest',  '2020-11-11 00:00:00'),
 ('direct', 'Alger', 'Paris',  '2020-09-01 00:00:00'),
 ('direct', 'Brest', 'Paris',  '2020-12-01 00:00:00');
 
