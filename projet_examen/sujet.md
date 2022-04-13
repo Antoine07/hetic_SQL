@@ -46,7 +46,7 @@ ADD CONSTRAINT `fk_pilots_planes`
 FOREIGN KEY (`plane_id`) REFERENCES `planes`(`id`);
 ```
 
-Insérez et mettez à jour les tables planes et pilots, voyez les sources sur la plateforme.
+Insérez et mettez à jour les tables planes et pilots, voyez les sources ci-dessous :
 
 ```sql
 
