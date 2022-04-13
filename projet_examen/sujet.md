@@ -1,5 +1,7 @@
 # Exercices SQL (à rendre le 16/04)
 
+Vous pouvez vous mettre par équipe de 3 au plus. Vous devez me rendre l'ensemble du projet dans un fichier `examen.sql` sur Discord par groupe et de manière individuel.
+
 ## Sommaire
 
 1. [Refactorisation du modèle de données](#refactorisation-du-modèle-de-données)
@@ -8,8 +10,6 @@
 4. [Exercices](#exercices)
 
 ## Refactorisation du modèle de données
-
-Vous pouvez vous mettre par équipe de 3 au plus. Vous devez me rendre l'ensemble du projet dans un fichier `examen.sql` sur Discord par groupe et de manière individuel.
 
 Nous allons créer un autre modèle de données dans la base de données `db_aviation`. _Faites une sauvegarde de l'ancienne base de données._
 
