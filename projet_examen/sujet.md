@@ -99,7 +99,9 @@ ON DELETE SET NULL;
 
 Comment cela va-t-il fonctionner ? Et bien par exemple, si vous supprimez l'avion A320 dans la table `planes`, alors MySQL remplacera toutes les références dans la table `pilots` par la valeur `NULL`, le type `plane_id` doit donc être possiblement `NULL`.
 
-## Relation N:N
+## Exercices
+
+### 1. Écrire les relations
 
 Nous voulons créer une table `trips`. Elle contiendra les colonnes suivantes (choisissez le type de ces champs en fonction de ce qu'ils représentent) :
 
@@ -108,11 +110,7 @@ Nous voulons créer une table `trips`. Elle contiendra les colonnes suivantes (c
 - departure
 - arrival
 
-## Exercices
-
-### 1. Écrire les relations
-
-Vous allez essayer d'écrire les relations entre la table `pilots` et `trips` en faisant des phrases en français pour expliciter leurs cardinalités.
+Vous allez essayer d'écrire les relations entre la table `pilots` et `trips` en faisant des phrases en français pour expliciter leurs [cardinalités](https://laurent-audibert.developpez.com/Cours-BD/?page=conception-des-bases-de-donnees-modele-a#L2-2-5).
 
 ### 2. Schéma
 
