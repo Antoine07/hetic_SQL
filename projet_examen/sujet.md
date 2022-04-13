@@ -115,7 +115,7 @@ Nous voulons créer une table `trips`. Elle contiendra les colonnes suivantes (c
 
 Dans un premier temps, vous allez essayer d'écrire les relations entre la table `pilots` et `trips` en faisant des phrases en français pour expliciter leurs [cardinalités](https://laurent-audibert.developpez.com/Cours-BD/?page=conception-des-bases-de-donnees-modele-a#L2-2-5).
 
-_Vous créerez la table à [l'exercice 3](#3-passer-au-code)_
+_Vous créerez la table à [l'exercice 3](#3-passer-au-code)_.
 
 ### 2. Schéma
 
